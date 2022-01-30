@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+
+  project-movie:
+    image: mysql:8.0.17
+    environment:
+      MYSQL_ROOT_PASSWORD: test123*
+      MYSQL_DATABASE: project-movie
+    ports:
+      - "3306:3306"
+
+  admin:    
+    image: adminer    
+    ports:      
+      - "8080:8080"
