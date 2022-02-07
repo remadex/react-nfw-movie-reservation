@@ -83,7 +83,7 @@ const Home = () => {
       movie: Yup.string().required('Le film est requis'),
       number: Yup.number().required('Le nombre de place est requis'),
       date: Yup.date()
-        .min(today, 'La date ne peut pas être antérieur à la date du jour')
+        .min(today, 'La date ne peut pas être antérieur ou égale à la date du jour')
         .required('La date est requis'),
     }),
     onSubmit: async (values) => {
@@ -107,7 +107,7 @@ const Home = () => {
     //   movie: reservation.movie,
     // });
     // console.log(resultReservation);
-    toast('La réservation a bien été faite');
+    toast('La réservation a bien été enregistrée');
     navigate(`/reservations`);
   };
   return (
@@ -116,10 +116,8 @@ const Home = () => {
         <Loader />
       ) : (
         <div>
-          {/* <h1 className="mainTitle">Réserver un film</h1> */}
           <Step currentStep={currentStep} />
           <div className="bg-white p-8 shadow-sm">
-            {/* <h2 className="secondaryTitle">Informations personnelles</h2> */}
             {currentStep === 1 && <ClientForm formik={formikClient} />}
             {currentStep === 2 && (
               <ReservationForm
@@ -135,9 +133,6 @@ const Home = () => {
                 confirmReservation={confirmReservation}
               />
             )}
-
-            {/* <h2 className="secondaryTitle">Choissisez votre film</h2> */}
-            {/* <h2 className="secondaryTitle">Récapitulatif</h2> */}
           </div>
         </div>
       )}
