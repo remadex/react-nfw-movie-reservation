@@ -21,7 +21,7 @@ export class MovieSerializer extends BaseJsonApiSerializer<MovieModel> {
     });
 
     this.serializer.register('reservation', {
-      whitelist: ['number'],
+      whitelist: ['number', 'date'],
     });
   }
 

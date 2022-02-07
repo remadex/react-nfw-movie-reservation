@@ -63,13 +63,13 @@ export async function runApplication () {
     throw new Error('Failed to connect to database');
   }
 
-  // if (env === 'test') {
-  const generator = orm.getSchemaGenerator();
-  await generator.dropSchema();
-  await generator.createSchema();
-  await generator.updateSchema();
-  await new TestSeeder().run(orm.em as SqlEntityManager);
-  // }
+  if (env === 'test') {
+    const generator = orm.getSchemaGenerator();
+    await generator.dropSchema();
+    await generator.createSchema();
+    await generator.updateSchema();
+    await new TestSeeder().run(orm.em as SqlEntityManager);
+  }
 
   const koaApp = await createApplication({
     controllers: [AuthController, UsersController, DocumentController, MovieController, ReservationController, ClientController],

@@ -1,8 +1,18 @@
 import React from 'react';
 import Select from 'react-select';
+import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker';
+import fr from 'date-fns/locale/fr';
 
-const ReservationForm = ({ formik, movies }) => (
-  <form onSubmit={formik.handleSubmit} className="grid grid-cols-2 gap-x-16 gap-y-8">
+registerLocale('fr', fr);
+setDefaultLocale('fr');
+
+const ReservationForm = ({ formik, movies, changeCurrentStep }) => (
+  <form
+    onSubmit={(e) => {
+      e.preventDefault();
+      formik.handleSubmit(e);
+    }}
+    className="grid grid-cols-2 gap-x-16 gap-y-8">
     <div>
       <label htmlFor="movie" className="block text-sm font-semibold text-gray-700">
         Choissisez votre film
@@ -11,27 +21,36 @@ const ReservationForm = ({ formik, movies }) => (
         <Select
           options={movies}
           isSearchable={false}
+          className="border-gray-300"
           placeholder="Sélectionner un film"
+          // inputValue={movies.find((m) => m.value === formik.values.movie).label}
           onChange={(option) => {
             formik.setFieldValue('movie', option.value);
           }}
         />
-        {/* <select
-          id="country"
-          name="country"
-          autoComplete="country-name"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
-          {movies.map((movie) => (
-            <option key={movie.id} value={movie.name}>
-              {movie.name} | {movie.schedule} | {movie.price}€
-            </option>
-          ))}
-        </select> */}
         {formik.errors.movie ? (
           <div className="absolute -bottom-5 text-sm text-red-600">
             {formik.errors.movie}
+          </div>
+        ) : null}
+      </div>
+    </div>
+    <div>
+      <label htmlFor="movie" className="block text-sm font-semibold text-gray-700">
+        Date du film
+      </label>
+      <div className="mt-1 relative">
+        <DatePicker
+          selected={formik.values.date}
+          dateFormat="dd/MM/yyyy"
+          className="rounded py-1.5 border-gray-300 focus:ring-indigo-800"
+          onChange={(date) => {
+            formik.setFieldValue('date', date);
+          }}
+        />
+        {formik.errors.date ? (
+          <div className="absolute -bottom-5 text-sm text-red-600">
+            {formik.errors.date}
           </div>
         ) : null}
       </div>
@@ -57,9 +76,12 @@ const ReservationForm = ({ formik, movies }) => (
         ) : null}
       </div>
     </div>
-    <div className="col-span-2 flex justify-center">
+    <div className="col-span-2 flex justify-end">
+      <button type="button" className="btnUi mr-4" onClick={() => changeCurrentStep(-1)}>
+        Précédent
+      </button>
       <button type="submit" className="btnUi">
-        Créer un film
+        Suivant
       </button>
     </div>
   </form>

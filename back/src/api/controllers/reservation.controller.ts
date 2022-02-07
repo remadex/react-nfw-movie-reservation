@@ -24,6 +24,7 @@ export class ReservationController {
   @UseMiddleware(deserialize(ReservationDeserializer))
   @UseResponseHandler(JsonApiResponsehandler, ReservationSerializer)
   create (@EntityFromBody(ValidatedReservation, ReservationModel) body: ReservationModel) {
+    console.log(body);
     return this.reservationRepository.jsonApiCreate(body);
   }
 }

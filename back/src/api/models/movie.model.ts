@@ -3,8 +3,8 @@ import {
   Entity,
   BaseEntity,
   Property,
-  ManyToMany,
   Collection,
+  OneToMany,
 } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { MovieRepository } from '../repositories/movie.repository.js';
@@ -31,6 +31,6 @@ export class MovieModel
   @Property()
     createdAt: Date = new Date();
 
-  @ManyToMany('ReservationModel')
+  @OneToMany({ entity: () => ReservationModel, mappedBy: 'movie', orphanRemoval: true })
     reservations = new Collection<ReservationModel>(this);
 }

@@ -21,7 +21,7 @@ export class ClientSerializer extends BaseJsonApiSerializer<ClientModel> {
     });
 
     this.serializer.register('reservation', {
-      whitelist: ['number'],
+      whitelist: ['number', 'date'],
     });
   }
 

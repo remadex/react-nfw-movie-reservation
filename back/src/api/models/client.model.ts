@@ -31,7 +31,7 @@ export class ClientModel
   @Property()
   declare phone: string;
 
-  @OneToMany('ReservationModel', 'client')
+  @OneToMany({ entity: () => ReservationModel, mappedBy: 'client', orphanRemoval: true })
     reservations = new Collection<ReservationModel>(this);
 
   @Property()

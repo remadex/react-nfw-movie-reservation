@@ -12,22 +12,22 @@ export class ReservationSerializer extends BaseJsonApiSerializer<ReservationMode
     super(configurationService);
 
     this.serializer.register('reservations', {
-      whitelist: ['number'],
+      whitelist: ['number', 'date'],
       relationships: {
         client: {
-          type: 'client',
+          type: 'clients',
         },
         movie: {
-          type: 'movie',
+          type: 'movies',
         },
       },
     });
 
-    this.serializer.register('client', {
+    this.serializer.register('clients', {
       whitelist: ['lastName', 'firstName', 'email', 'phone'],
     });
 
-    this.serializer.register('movie', {
+    this.serializer.register('movies', {
       whitelist: ['name', 'price', 'schedule'],
     });
   }

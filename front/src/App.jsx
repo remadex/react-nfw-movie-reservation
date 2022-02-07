@@ -91,7 +91,7 @@ const App = () => (
           </ul>
         </nav>
       </header>
-      <main className="relative flex-grow max-w-screen-xl">
+      <main className="relative flex-grow container mx-auto">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/movies" element={<ListMovies />} />

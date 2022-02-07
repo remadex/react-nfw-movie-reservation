@@ -1,15 +1,22 @@
-import { useQuery } from 'jsonapi-react';
+import { useMutation, useQuery } from 'jsonapi-react';
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import Loader from '../components/Loader';
 import ClientForm from '../components/forms/ClientForm';
 import ReservationForm from '../components/forms/ReservationForm';
 import Summary from '../components/Summary';
+import Step from '../components/Step';
 
 const Home = () => {
   const { data, isLoading } = useQuery('movies');
+  const [addClient, { isLoading: isLoadingAddClient }] = useMutation('clients');
+  const [addReservation, { isLoading: isLoadingAddReservation }] =
+    useMutation('reservations');
   const [movies, setMovies] = useState([]);
+  const [currentStep, setCurrentStep] = useState(1);
   const [reservation, setReservation] = useState({
     firstName: '',
     lastName: '',
@@ -17,7 +24,9 @@ const Home = () => {
     phone: '',
     movie: {},
     number: 1,
+    date: new Date(),
   });
+  const navigate = useNavigate();
   useEffect(() => {
     if (data) {
       setMovies(
@@ -28,12 +37,16 @@ const Home = () => {
       );
     }
   }, [data]);
+
+  const changeCurrentStep = (direction) => {
+    setCurrentStep(currentStep + direction);
+  };
   const formikClient = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
+      firstName: 'Sébastien',
+      lastName: 'Cardon',
+      email: 'sebastien@triptyk.eu',
+      phone: '0498542256',
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required('Le prénom est requis'),
@@ -48,36 +61,83 @@ const Home = () => {
         )
         .required('Le numéro de téléphone est requis'),
     }),
-    onSubmit: () => {},
+    onSubmit: (values) => {
+      setReservation({
+        ...reservation,
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.phone,
+      });
+      changeCurrentStep(1);
+    },
   });
+  const today = new Date();
   const formikReservation = useFormik({
     initialValues: {
       movie: '',
       number: 1,
+      date: new Date(),
     },
     validationSchema: Yup.object({
       movie: Yup.string().required('Le film est requis'),
       number: Yup.number().required('Le nombre de place est requis'),
+      date: Yup.date()
+        .min(today, 'La date ne peut pas être antérieur à la date du jour')
+        .required('La date est requis'),
     }),
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const movie = data.find((el) => el.id === values.movie);
-      setReservation({ ...reservation, number: values.number, movie });
+      setReservation({ ...reservation, number: values.number, date: values.date, movie });
+      changeCurrentStep(1);
     },
   });
+  const confirmReservation = async () => {
+    // const resultClient = await addClient({
+    //   firstName: reservation.firstName,
+    //   lastName: reservation.lastName,
+    //   email: reservation.email,
+    //   phone: reservation.phone,
+    // });
+    // console.log(resultClient.data);
+    // const resultReservation = await addReservation({
+    //   number: reservation.number,
+    //   date: reservation.date,
+    //   client: resultClient.data,
+    //   movie: reservation.movie,
+    // });
+    // console.log(resultReservation);
+    toast('La réservation a bien été faite');
+    navigate(`/reservations`);
+  };
   return (
     <div>
-      {isLoading ? (
+      {isLoading || isLoadingAddReservation || isLoadingAddClient ? (
         <Loader />
       ) : (
         <div>
-          <h1 className="mainTitle">Réserver un film</h1>
+          {/* <h1 className="mainTitle">Réserver un film</h1> */}
+          <Step currentStep={currentStep} />
           <div className="bg-white p-8 shadow-sm">
-            <h2 className="secondaryTitle">Informations personnelles</h2>
-            <ClientForm formik={formikClient} />
-            <h2 className="secondaryTitle">Choissisez votre film</h2>
-            <ReservationForm formik={formikReservation} movies={movies} />
-            <h2 className="secondaryTitle">Récapitulatif</h2>
-            <Summary reservation={reservation} />
+            {/* <h2 className="secondaryTitle">Informations personnelles</h2> */}
+            {currentStep === 1 && <ClientForm formik={formikClient} />}
+            {currentStep === 2 && (
+              <ReservationForm
+                formik={formikReservation}
+                movies={movies}
+                changeCurrentStep={changeCurrentStep}
+              />
+            )}
+            {currentStep === 3 && (
+              <Summary
+                reservation={reservation}
+                changeCurrentStep={changeCurrentStep}
+                confirmReservation={confirmReservation}
+              />
+            )}
+
+            {/* <h2 className="secondaryTitle">Choissisez votre film</h2> */}
+            {/* <h2 className="secondaryTitle">Récapitulatif</h2> */}
           </div>
         </div>
       )}

@@ -4,8 +4,6 @@ import {
   BaseEntity,
   Property,
   ManyToOne,
-  ManyToMany,
-  Collection,
 } from '@mikro-orm/core';
 import { v4 } from 'uuid';
 import { ReservationRepository } from '../repositories/reservation.repository.js';
@@ -24,9 +22,12 @@ export class ReservationModel
   @Property()
   declare number: number;
 
-  @ManyToOne({})
+  @Property()
+  declare date: Date;
+
+  @ManyToOne('ClientModel')
   declare client: ClientModel;
 
-  @ManyToMany('MovieModel', 'reservations')
-    movies = new Collection<MovieModel>(this);
+  @ManyToOne('MovieModel')
+  declare movie: MovieModel;
 }

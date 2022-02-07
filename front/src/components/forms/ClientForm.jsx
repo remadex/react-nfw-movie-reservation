@@ -1,7 +1,12 @@
 import React from 'react';
 
 const ClientForm = ({ formik }) => (
-  <form className="grid grid-cols-2 gap-x-16 gap-y-8">
+  <form
+    onSubmit={(e) => {
+      e.preventDefault();
+      formik.handleSubmit(e);
+    }}
+    className="grid grid-cols-2 gap-x-16 gap-y-8">
     <div>
       <label htmlFor="lastName" className="block text-sm font-semibold text-gray-700">
         Nom
@@ -87,6 +92,11 @@ const ClientForm = ({ formik }) => (
           </div>
         ) : null}
       </div>
+    </div>
+    <div className="col-span-2 flex justify-end">
+      <button type="submit" className="btnUi">
+        Suivant
+      </button>
     </div>
   </form>
 );
