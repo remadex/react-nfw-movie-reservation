@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.itemLink {
+  @apply mr-8 last:flex-grow last:flex last:justify-end;
+}
+.itemLink a {
+  @apply px-4 py-2 flex font-semibold items-center w-full rounded hover:bg-gray-100 transition-colors duration-100 cursor-pointer last:w-auto;
+}
+.itemLink svg {
+  @apply w-6 h-6 mr-2;
+}
+
+.activeItem {
+  @apply bg-indigo-600 text-white;
+}
+.activeItem:hover {
+  background-color: rgb(
+    55,
+    48,
+    163
+  ) !important; /*Obligé de passer en css clasique car le bg-gray-100 surclasse*/
+}
+
+.toastStyle {
+  @apply cursor-pointer font-semibold;
+  background-color: rgb(79 70 229) !important;
+  color: white !important;
+}
+
+.mainTitle {
+  @apply text-4xl relative my-8 inline-block ml-4;
+}
+
+.mainTitle::after {
+  content: '';
+  @apply absolute -bottom-2 h-1 left-0 w-16 bg-indigo-600 rounded duration-300;
+}
+
+.mainTitle:hover::after {
+  @apply w-full;
+}
+
+.secondaryTitle {
+  @apply text-2xl relative my-8 inline-block ml-4;
+}
+
+.secondaryTitle::after {
+  content: '';
+  @apply absolute -bottom-2 h-1 left-0 w-16 bg-gray-400 rounded duration-300;
+}
+
+.secondaryTitle:hover::after {
+  @apply w-full;
+}
+.btnUi {
+  @apply px-4 py-2 flex font-semibold items-center rounded bg-indigo-600 text-white transition-colors duration-100;
+}
+.btnUi:hover {
+  @apply bg-indigo-800;
+}
+.btnUi svg {
+  @apply w-6 h-6 mr-2;
+}

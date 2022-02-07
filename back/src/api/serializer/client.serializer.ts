@@ -1,18 +1,18 @@
 import { inject, injectable, singleton } from '@triptyk/nfw-core';
 import { BaseJsonApiSerializer } from '../../json-api/serializer/base.serializer.js';
-import type { MovieModel } from '../models/movie.model.js';
+import type { ClientModel } from '../models/client.model.js';
 import { ConfigurationService } from '../services/configuration.service.js';
 
 @injectable()
 @singleton()
-export class MovieSerializer extends BaseJsonApiSerializer<MovieModel> {
+export class ClientSerializer extends BaseJsonApiSerializer<ClientModel> {
   constructor (
     @inject(ConfigurationService) configurationService: ConfigurationService,
   ) {
     super(configurationService);
 
-    this.serializer.register('movies', {
-      whitelist: ['name', 'schedule', 'price'],
+    this.serializer.register('clients', {
+      whitelist: ['firstName', 'lastName', 'email', 'phone'],
       relationships: {
         reservations: {
           type: 'reservation',
@@ -26,11 +26,11 @@ export class MovieSerializer extends BaseJsonApiSerializer<MovieModel> {
   }
 
   serialize (
-    data: MovieModel[] | MovieModel,
+    data: ClientModel[] | ClientModel,
     extraData?: Record<string, unknown>,
   ) {
     return this.serializer.serializeAsync(
-      'movies',
+      'clients',
       data,
       extraData ?? ({} as any),
     );

@@ -25,6 +25,10 @@ import { createRateLimitMiddleware } from './api/middlewares/rate-limit.middlewa
 import helmet from 'koa-helmet';
 import { MovieModel } from './api/models/movie.model.js';
 import { MovieController } from './api/controllers/movie.controller.js';
+import { ClientController } from './api/controllers/client.controller.js';
+import { ClientModel } from './api/models/client.model.js';
+import { ReservationModel } from './api/models/reservation.model.js';
+import { ReservationController } from './api/controllers/reservation.controller.js';
 
 export async function runApplication () {
   /**
@@ -40,7 +44,7 @@ export async function runApplication () {
     .load();
   const logger = container.resolve(LoggerService);
   const orm = await MikroORM.init({
-    entities: [UserModel, RefreshTokenModel, DocumentModel, MovieModel],
+    entities: [UserModel, RefreshTokenModel, DocumentModel, MovieModel, ReservationModel, ClientModel],
     dbName: database.database,
     host: database.host,
     user: database.user,
@@ -59,16 +63,16 @@ export async function runApplication () {
     throw new Error('Failed to connect to database');
   }
 
-  if (env === 'test') {
-    const generator = orm.getSchemaGenerator();
-    await generator.dropSchema();
-    await generator.createSchema();
-    await generator.updateSchema();
-    await new TestSeeder().run(orm.em as SqlEntityManager);
-  }
+  // if (env === 'test') {
+  const generator = orm.getSchemaGenerator();
+  await generator.dropSchema();
+  await generator.createSchema();
+  await generator.updateSchema();
+  await new TestSeeder().run(orm.em as SqlEntityManager);
+  // }
 
   const koaApp = await createApplication({
-    controllers: [AuthController, UsersController, DocumentController, MovieController],
+    controllers: [AuthController, UsersController, DocumentController, MovieController, ReservationController, ClientController],
     globalGuards: [],
     globalMiddlewares: [
       helmet(),

@@ -3,34 +3,37 @@ import {
   Entity,
   BaseEntity,
   Property,
-  ManyToMany,
   Collection,
+  OneToMany,
 } from '@mikro-orm/core';
 import { v4 } from 'uuid';
-import { MovieRepository } from '../repositories/movie.repository.js';
+import { ClientRepository } from '../repositories/client.repository.js';
 import { ReservationModel } from './reservation.model.js';
 
 @Entity({
-  tableName: 'movies',
-  customRepository: () => MovieRepository,
+  tableName: 'clients',
+  customRepository: () => ClientRepository,
 })
-export class MovieModel
+export class ClientModel
   extends BaseEntity<any, any> {
   @PrimaryKey()
     id: string = v4();
 
   @Property()
-  declare name: string;
+  declare lastName: string;
 
   @Property()
-  declare price: number;
+  declare firstName: string;
 
   @Property()
-  declare schedule: string;
+  declare email: string;
+
+  @Property()
+  declare phone: string;
+
+  @OneToMany('ReservationModel', 'client')
+    reservations = new Collection<ReservationModel>(this);
 
   @Property()
     createdAt: Date = new Date();
-
-  @ManyToMany('ReservationModel')
-    reservations = new Collection<ReservationModel>(this);
 }
