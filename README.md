@@ -3,7 +3,7 @@
 ```bash
 mkdir project-movie
 cd project-movie
-npx degit https://github.com/remadex/movie_project.git .
+npx degit https://github.com/remadex/react-nfw-movie-reservation.git .
 ```
 
 ## Mise en place du docker
