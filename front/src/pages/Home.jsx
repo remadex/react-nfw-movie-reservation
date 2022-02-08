@@ -99,14 +99,12 @@ const Home = () => {
       email: reservation.email,
       phone: reservation.phone,
     });
-    console.log(resultClient.data);
-    const resultReservation = await addReservation({
+    await addReservation({
       number: reservation.number,
       date: new Date(reservation.date),
       client: resultClient.data,
       movie: reservation.movie,
     });
-    console.log(resultReservation);
     toast('La réservation a bien été enregistrée');
     navigate(`/reservations`);
   };

@@ -2,27 +2,28 @@ const port = 8000;
 
 export default {
   jwt: {
-    secret: 'h8566MNQ18oo5cMmHROVh8566MNQ18oo5cMmHROVh8566MNQ18oo5cMmHROVh8566MNQ18oo5cMmHROV',
+    secret:
+      "h8566MNQ18oo5cMmHROVh8566MNQ18oo5cMmHROVh8566MNQ18oo5cMmHROVh8566MNQ18oo5cMmHROV",
     accessExpires: 5,
     refreshExpires: 1440,
   },
   logger: {
     logToConsole: true,
-    dir: 'dist/logs/',
+    dir: "dist/logs/",
   },
-  baseURL: '/api/v1',
+  baseURL: "/api/v1",
   port,
   database: {
-    host: 'localhost',
-    user: 'root',
-    password: 'test123*',
-    database: 'project-movie',
+    host: "localhost",
+    user: "root",
+    password: "test123*",
+    database: "project-movie",
     port: 3306,
-    type: 'mysql',
+    type: "mysql",
     debug: false,
   },
-  env: 'development',
+  env: "development",
   cors: {
-    origin: '*',
+    origin: "*",
   },
 };

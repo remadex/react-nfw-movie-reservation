@@ -26,7 +26,6 @@ export abstract class JsonApiRepository<T> extends EntityRepository<T> {
      * Do not specify root entity, remove it
      */
     const fields = params.fields?.map((field) => field.startsWith(`${entityName}.`) ? field.replace(`${entityName}.`, '') : field);
-
     /**
      * Transform into nested object with order specified
      */

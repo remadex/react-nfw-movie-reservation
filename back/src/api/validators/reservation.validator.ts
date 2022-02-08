@@ -5,7 +5,7 @@ export class ValidatedReservation extends SchemaBase {
     @Number()
   public number!: number;
 
-    @Date()
+    @Date({ convert: true })
     public date!: Date;
 }
 
@@ -18,6 +18,7 @@ export class ValidatedReservationUpdate extends SchemaBase {
 
   @Date({
     optional: true,
+    convert: true,
   })
     public date!: Date;
 }
