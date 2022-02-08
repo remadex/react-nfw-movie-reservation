@@ -21,11 +21,6 @@ const schema = {
       price: 'number',
       schedule: 'string',
     },
-    // relationships: {
-    //   reservations: {
-    //     type: 'reservations',
-    //   },
-    // },
   },
   clients: {
     type: 'clients',
@@ -35,11 +30,6 @@ const schema = {
       email: 'string',
       phone: 'string',
     },
-    // relationships: {
-    //   reservations: {
-    //     type: 'reservations',
-    //   },
-    // },
   },
 };
 export default schema;

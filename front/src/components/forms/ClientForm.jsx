@@ -60,7 +60,6 @@ const ClientForm = ({ formik }) => (
             type="text"
             name="email"
             id="email"
-            placeholder="xxx@xxx.xxx"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.email}
@@ -82,7 +81,6 @@ const ClientForm = ({ formik }) => (
             type="text"
             name="phone"
             id="phone"
-            placeholder="0499845434"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.phone}

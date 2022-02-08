@@ -15,7 +15,7 @@ const Summary = ({ reservation, confirmReservation, changeCurrentStep }) => (
         Email: <b>{reservation.email}</b>
       </p>
       <p className="py-1">
-        Téléphone: <b>{reservation.email}</b>
+        Téléphone: <b>{reservation.phone}</b>
       </p>
     </div>
     <div className="bg-indigo-200 rounded-lg mt-8 p-8 text-lg flex flex-col items-center">

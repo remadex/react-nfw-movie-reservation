@@ -1,16 +1,18 @@
-version: '3'
+version: "3"
 
 services:
-
   project-movie:
     image: mysql:8.0.17
+    volumes:
+      - ./movie.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: test123*
       MYSQL_DATABASE: project-movie
     ports:
       - "3306:3306"
 
-  admin:    
-    image: adminer    
-    ports:      
+  admin:
+    image: adminer
+    ports:
       - "8080:8080"

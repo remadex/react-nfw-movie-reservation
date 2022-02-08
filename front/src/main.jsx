@@ -5,6 +5,7 @@ import { ApiClient, ApiProvider } from 'jsonapi-react';
 import './assets/index.css';
 import './assets/loader.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-vertical-timeline-component/style.min.css';
 import App from './App';
 import schema from './schema';
 

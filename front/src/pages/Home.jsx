@@ -43,10 +43,10 @@ const Home = () => {
   };
   const formikClient = useFormik({
     initialValues: {
-      firstName: 'Sébastien',
-      lastName: 'Cardon',
-      email: 'sebastien@triptyk.eu',
-      phone: '0498542256',
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required('Le prénom est requis'),
@@ -93,20 +93,20 @@ const Home = () => {
     },
   });
   const confirmReservation = async () => {
-    // const resultClient = await addClient({
-    //   firstName: reservation.firstName,
-    //   lastName: reservation.lastName,
-    //   email: reservation.email,
-    //   phone: reservation.phone,
-    // });
-    // console.log(resultClient.data);
-    // const resultReservation = await addReservation({
-    //   number: reservation.number,
-    //   date: reservation.date,
-    //   client: resultClient.data,
-    //   movie: reservation.movie,
-    // });
-    // console.log(resultReservation);
+    const resultClient = await addClient({
+      firstName: reservation.firstName,
+      lastName: reservation.lastName,
+      email: reservation.email,
+      phone: reservation.phone,
+    });
+    console.log(resultClient.data);
+    const resultReservation = await addReservation({
+      number: reservation.number,
+      date: new Date(reservation.date),
+      client: resultClient.data,
+      movie: reservation.movie,
+    });
+    console.log(resultReservation);
     toast('La réservation a bien été enregistrée');
     navigate(`/reservations`);
   };

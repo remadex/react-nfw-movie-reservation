@@ -11,7 +11,6 @@ const AddMovieForm = ({ formik }) => (
           type="text"
           name="name"
           id="name"
-          placeholder="Nom du film"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.name}
@@ -33,7 +32,6 @@ const AddMovieForm = ({ formik }) => (
           type="number"
           name="price"
           id="price"
-          placeholder="10"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.price}
