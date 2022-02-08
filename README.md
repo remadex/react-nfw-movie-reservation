@@ -1,6 +1,10 @@
 # Installation du projet
 
----
+```bash
+mkdir project-movie
+cd project-movie
+npx degit https://github.com/remadex/movie_project.git .
+```
 
 ## Mise en place du docker
 
